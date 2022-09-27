@@ -7,9 +7,10 @@ CC = gcc
 CXX = g++
 
 PROGRAM = bash
-CFILES  = ${wildcard *.c}
+ALLCFILES  = ${wildcard *.c}
+CFILES  = ${filter-out parser.tab.c lex.yy.c ,${ALLCFILES}}
 CCFILES = ${wildcard *.cc}
-HFILE = bash.h
+HFILES = bash.h 
 
 
 ##################################################
@@ -19,16 +20,14 @@ HFILE = bash.h
 ##################################################
 
 
-# compute the OFILES
-OFILES = ${CFILES:.c=.o} ${CCFILES:.cc=.o}
+# all of the .o files that the program needs that are user-created
+OBJECTS = ${CFILES:.c=.o} ${CCFILES:.cc=.o}
 
-# all of the .o files that the program needs
-OBJECTS = parser.tab.o lex.yy.o ${OFILES}
 
 
 # How to make the whole program
-${PROGRAM} : ${OBJECTS}
-	${CXX} ${CFLAGS} ${OBJECTS} -o ${PROGRAM} 
+${PROGRAM} : ${OBJECTS} parser.tab.h parser.tab.o lex.yy.o
+	${CXX} ${CFLAGS} ${OBJECTS} lex.yy.o parser.tab.o -o ${PROGRAM} 
 
 
 # 
@@ -45,7 +44,7 @@ parser.tab.h: parser.tab.c
 # 
 #  Turn the scanner.l file into lex.yy.c using "lex"
 # 
-lex.yy.c : scanner.l parser.tab.h ${HFILE}
+lex.yy.c : scanner.l parser.tab.h ${HFILES}
 	flex ${LFLAGS} scanner.l
 lex.yy.o: lex.yy.c
 	${CC} ${CFLAGS} -Wno-unused-function -g -c lex.yy.c
@@ -53,7 +52,7 @@ lex.yy.o: lex.yy.c
 #
 # File dependencies
 #
-${OFILES}: ${HFILE} parser.tab.h
+${OBJECTS}: ${HFILES} parser.tab.h
 
 test: bash
 	-chmod a+rx ./test.?
