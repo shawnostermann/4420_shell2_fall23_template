@@ -28,7 +28,7 @@ V2="($V1*$V1)"
 
 echo "the next line should say '1 1 55986'"
 /bin/echo $V2  > tmp.1.out
-wc < tmp.1.OUT > tmp.2.out
+wc < tmp.1.out > tmp.2.out
 awk '{printf("%s %s %s\n", $1, $2, $3);}' < tmp.2.out
 
 /bin/echo "the next line should say '3501 3499 15942'"
