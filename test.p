@@ -64,7 +64,7 @@ And this should generate 3 syntax errors
 Error on line 17: illegal redirection
 Error on line 17: illegal redirection
 And this tests to make sure that you don't run ANY of the piped commands if redir is bad
-nosuchfile: No such file or directory
+Error on line 20: illegal redirection
 END
 
 # don't change anything else
