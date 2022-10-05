@@ -33,7 +33,7 @@ rm -f tmp.e1 tmp.e2 tmp.e3
 echo "This should run, but generate errors in the stderr log files"
 cat /badfile1 2>tmp.e1 | cat /badfile2 2>tmp.e2 | cat /badfile3 2>tmp.e3
 ./tmp.stat tmp.e1 tmp.e2 tmp.e3
-cat -n tmp.e1 tmp.e2 tmp.e3
+head tmp.e1 tmp.e2 tmp.e3
 
 echo "And this should generate 3 syntax errors"
 cat /badfile1 <tmp.i1 | cat /badfile2 <tmp.i2 | cat /badfile3 <tmp.i3
@@ -54,9 +54,12 @@ This should run, but generate errors in the stderr log files
 -rw-r--r--      1      7     42 tmp.e1
 -rw-r--r--      1      7     42 tmp.e2
 -rw-r--r--      1      7     42 tmp.e3
-     1	cat: /badfile1: No such file or directory
-     1	cat: /badfile2: No such file or directory
-     1	cat: /badfile3: No such file or directory
+==> tmp.e1 <==
+cat: /badfile1: No such file or directory
+==> tmp.e2 <==
+cat: /badfile2: No such file or directory
+==> tmp.e3 <==
+cat: /badfile3: No such file or directory
 And this should generate 3 syntax errors
 Error on line 17: illegal redirection
 Error on line 17: illegal redirection
