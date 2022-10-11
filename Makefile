@@ -2,7 +2,8 @@
 # Shell2 lex/yacc Makefile
 # Shawn Ostermann - Sept 27, 2022
 #
-CFLAGS = -Wall -Werror -O2
+CFLAGS   = -Wall -Werror -O2
+CXXFLAGS = -Wall -Werror -O2
 CC = gcc
 CXX = g++
 
